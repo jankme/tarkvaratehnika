@@ -3,6 +3,42 @@
 
 <property file="version.properties"/>
 <property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+	
+	<target name="Intro">
+		<java classname="ee.ut.math.tvt.averagejoes.Intro" classpathref="test.classpath" fork="yes"/>
+	</target>
+	
+	<path id="test.classpath">
+		<pathelement location="${build.classes.dir}"/>
+		<!-- configuration -->
+		<pathelement location="${conf.dir}"/>
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="build" description="Build the system">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.classes.dir}"/>
+		<javac
+            srcdir="${src.dir}"
+            destdir="${build.classes.dir}"
+            debug="true"
+            debuglevel="lines,vars,source"
+            encoding="utf-8"
+            compiler="modern"
+            target="1.7"
+            source="1.7"
+			includeantruntime="false">
+			<classpath refid="compile.classpath"/>
+		</javac>
+
+	</target>
+	
+	<target name="clean" description="Clean up build system results">
+		<delete dir="${build.dir}"/>
+	</target>
+	
 
 <target name="current-number">
  <echo>Current build number:${build.number}</echo>
@@ -17,20 +53,20 @@
 </target>
 
 <target name="revision">
-    <propertyfile  file="application.properties">
+    <propertyfile  file="version.properties">
             <entry key="build.revision.number" type="int" operation="+" value="1" pattern="00"/>
     </propertyfile>
 </target>
 
 <target name="minor">
-    <propertyfile  file="application.properties">
+    <propertyfile  file="version.properties">
             <entry key="build.minor.number" type="int" operation="+" value="1" pattern="00"/>
             <entry key="build.revision.number" type="int" value="0" pattern="00"/>
     </propertyfile>
 </target>
 
 <target name="major">
-    <propertyfile  file="application.properties">
+    <propertyfile  file="version.properties">
             <entry key="build.major.number" type="int" operation="+" value="1" pattern="00"/>
             <entry key="build.minor.number" type="int" value="0" pattern="00"/>
             <entry key="build.revision.number" type="int" value="0" pattern="00"/>
@@ -38,11 +74,12 @@
 </target>
 
 <target name="all">
-    <propertyfile  file="application.properties">
+    <propertyfile  file="version.properties">
             <entry key="build.major.number" type="int" operation="+" value="1" pattern="00"/>
             <entry key="build.minor.number" type="int" operation="+" value="1" pattern="00"/>
             <entry key="build.revision.number" type="int" operation="+" value="1" pattern="00"/>
     </propertyfile>
 </target>
+
 
 </project>

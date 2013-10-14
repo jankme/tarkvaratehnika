@@ -14,7 +14,7 @@ public class IntroUI  {
 	    Container sisu = raam.getContentPane(); // konteineri loomine
 	    sisu.setLayout(new FlowLayout(FlowLayout.LEFT)); // paigutushalduri kasutamine
 
-	    JLabel name1 = new JLabel("<html>Team Name: Average Joes <br>Team leader: Stenno Sirdla <br>Team email: email@email.ee <br>Team members: Stenno Sirdla, Joanna Niklus, Jan Kaljumäe, Tanel Aamer</html>");    
+	    JLabel name1 = new JLabel("<html>Team Name: Average Joes <br>Team leader: Stenno Sirdla <br>Team email: email@email.ee <br>Team members: Stenno Sirdla, Joanna Niklus, Jan Kaljumäe, Tanel Aamer <br>Software version number: 2.0.0</html>");    
 	    sisu.add(name1);
 	    ImageIcon image = new ImageIcon("average.jpg");
 	    JLabel imageLabel = new JLabel(image);
