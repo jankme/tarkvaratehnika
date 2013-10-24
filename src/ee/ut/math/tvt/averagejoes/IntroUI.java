@@ -10,6 +10,7 @@ public class IntroUI extends JFrame {
 		JFrame raam = new JFrame("POS"); // raami loomine
 	    raam.setSize(600, 400); //
 	    raam.setLocation(100, 100); //
+	    raam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	    Container sisu = raam.getContentPane(); // konteineri loomine
 	    sisu.setLayout(new FlowLayout(FlowLayout.LEFT)); // paigutushalduri kasutamine
