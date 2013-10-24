@@ -3,10 +3,10 @@ package ee.ut.math.tvt.averagejoes;
 import java.awt.*;
 import javax.swing.*;
 
-public class IntroUI  {
+public class IntroUI extends JFrame {
 
 	
-	public void panel() {
+	public IntroUI() {
 		JFrame raam = new JFrame("POS"); // raami loomine
 	    raam.setSize(600, 400); //
 	    raam.setLocation(100, 100); //
