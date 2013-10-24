@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." name="POS" default="build">
 
-        <!-- Definitions of variables used during the rest of this script -->
+        <!-- Variable definitons -->
         <property name="main-class" value="ee.ut.math.tvt.averagejoes.Intro" />
         <property file="build.properties"/>
         <property name="build.dir" value="${basedir}/build"/>
-                <property name="build.classes.dir" value="${build.dir}/classes"/>
-                <property name="dist.dir" value="${build.dir}/jar"/>
+        <property name="build.classes.dir" value="${build.dir}/classes"/>
+        <property name="dist.dir" value="${build.dir}/jar"/>
         <property name="src.dir" value="${basedir}/src"/>
         <property name="bin.dir" value="${basedir}/bin"/>
         <property name="lib.dir" value="${basedir}/lib"/>
-        <property name="version.file" location="${basedir}/conf/version.properties"/>
+        <property name="version.file" location="${basedir}/version.properties"/>
 
-        <!-- Definitions of classpath variants used for different tasks -->
+        <!-- Classpath definitons -->
         <path id="compile.classpath">
                 <fileset dir="lib">
                         <include name="*.jar"/>
@@ -79,6 +79,13 @@
         <target name="jrun" depends="dist" description="Run .jar">
             <java jar="${dist.dir}/AverageJoes.jar" fork="true"/>
         </target>
+	
+    	<!-- Run application in console -->
+    	<target name="runc" depends="build" description="Run the application (console)">
+            <java classname="${main-class}" classpathref="test.classpath" fork="yes">
+                    <arg value="console" />
+            </java>
+    	</target>
 
         <!-- Clean up build system results -->
         <target name="clean" description="Clean up build system results">
@@ -86,11 +93,5 @@
                 <delete dir="${bin.dir}" />
         </target>
         
-        <!-- Run application in console -->
-        <target name="runc" depends="build" description="Run the application (console)">
-                <java classname="${main-class}" classpathref="test.classpath" fork="yes">
-                        <arg value="console" />
-                </java>
-        </target>
 
 </project>
