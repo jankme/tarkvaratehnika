@@ -67,7 +67,7 @@
 		<delete dir="${build.dir}"/>
 	</target>
 	
-	<!-- Git commit -->
+	<!-- Git commit2 -->
 	<macrodef name="git">
 			<attribute name="command" />
 			<attribute name="dir" default="" />
