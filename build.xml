@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." name="POS" default="build">
+<project basedir="." name="AJPOS" default="build">
 
-        <!-- Variable definitons -->
-        <property name="main-class" value="ee.ut.math.tvt.averagejoes.Intro" />
-        <property file="build.properties"/>
-        <property name="build.dir" value="${basedir}/build"/>
-        <property name="build.classes.dir" value="${build.dir}/classes"/>
-        <property name="dist.dir" value="${build.dir}/jar"/>
-        <property name="src.dir" value="${basedir}/src"/>
-        <property name="bin.dir" value="${basedir}/bin"/>
-        <property name="lib.dir" value="${basedir}/lib"/>
-        <property name="version.file" location="${basedir}/version.properties"/>
+	<!-- Definitions of variables used during the rest of this script -->
 
-        <!-- Classpath definitons -->
-        <path id="compile.classpath">
-                <fileset dir="lib">
-                        <include name="*.jar"/>
-                </fileset>
-        </path>
+	<property file="build.properties"/>
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.classes.dir" value="${build.dir}/classes"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="dist.dir" value="${basedir}/dist"/>
+	<property name="conf.dir" value="${basedir}/etc"/>
+	<property name="doc.dir" value="${build.dir}/doc"/>
+	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 
-        <path id="test.classpath">
-                <pathelement location="${build.classes.dir}"/>
-                <pathelement location="${basedir}"/>
-                <fileset dir="lib">
-                        <include name="*.jar"/>
-                </fileset>
-        </path>
+	<!-- Definitions of classpath variants used for different tasks -->
 
-        <!-- Builds project -->
-        <target name="build" depends="clean" description="Build the system">
-                <mkdir dir="${build.dir}"/>
-                <mkdir dir="${build.classes.dir}"/>                
-                <javac
+	<path id="compile.classpath">
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="test.classpath">
+		<pathelement location="${build.classes.dir}"/>
+		<!-- configuration -->
+		<pathelement location="${basedir}"/>
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Definitions of runnable ant targets.
+         Run them from the command line by executing "ant [targetname]"  -->
+
+	<target name="run" depends="build" description="Run the application">
+		<java classname="ee.ut.math.tvt.averagejoes.Intro" classpathref="test.classpath" fork="yes" />
+	</target>
+
+	<target name="build" description="Build the system">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.classes.dir}"/>
+		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
             debug="true"
@@ -40,58 +48,24 @@
             compiler="modern"
             target="1.7"
             source="1.7"
-                        includeantruntime="false">
-                        <classpath refid="compile.classpath"/>
-                </javac>                
-        </target>
-        
-        <!-- Runs project -->
-        <target name="run" depends="build" description="Run the AverageJoes application">
-                <java classname="${main-class}" classpathref="test.classpath" fork="yes" />
-        </target>
-        
-        <!-- Builds .jar file -->
-        <target name="dist" depends="build" description="Build .jar">
-                <!-- increasing version file variable build.revision.number -->
-                <propertyfile file="${version.file}">
-                        <entry key="build.revision.number" default="0" operation="+"  type="int"/>
-                </propertyfile>
-                <!-- loading new build.revision.number after increase -->
-                <property file="${version.file}"/>
-                <!-- editing version file variable build.number -->
-                <propertyfile file="${version.file}">
-                        <entry key="build.number" default="0.0.0" value="${build.major.number}.${build.minor.number}.${build.revision.number}"  type="string"/>
-                </propertyfile>                
-                
-            <jar 
-                    destfile="${dist.dir}/AverageJoes.jar" 
-                    basedir="${build.classes.dir}">
-                <manifest>
-                         <attribute name="Main-Class" value="${main-class}"/>
-                </manifest>
-                    <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
-                    <fileset dir="${basedir}" includes="conf/**" />
-                    <fileset dir="${basedir}" includes="res/**" />
-                </jar>
-        </target>
-        
-        <!-- Runs .jar file -->
-        <target name="jrun" depends="dist" description="Run .jar">
-            <java jar="${dist.dir}/AverageJoes.jar" fork="true"/>
-        </target>
-	
-    	<!-- Run application in console -->
-    	<target name="runc" depends="build" description="Run the application (console)">
-            <java classname="${main-class}" classpathref="test.classpath" fork="yes">
-                    <arg value="console" />
-            </java>
-    	</target>
+			includeantruntime="false">
+			<classpath refid="compile.classpath"/>
+		</javac>
 
-        <!-- Clean up build system results -->
-        <target name="clean" description="Clean up build system results">
-                <delete dir="${build.dir}"/>
-                <delete dir="${bin.dir}" />
-        </target>
-        
+	</target>
+
+	<!-- Build internal documentation -->
+	<target name="javadoc" description="Build internal documentation">
+		<mkdir dir="${doc.dir}"/>
+		<javadoc destdir="${doc.dir}" classpathref="compile.classpath">
+			<fileset dir="${src.dir}" includes="**/*.java"/>
+		</javadoc>
+	</target>
+
+	<!-- Clean up build system results -->
+	<target name="clean" description="Clean up build system results">
+		<delete dir="${build.dir}"/>
+	</target>
 
 </project>
+
